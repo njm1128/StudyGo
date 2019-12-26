@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Data-Mapper">
+	<resultMap type="data" id="dataMap">
+		<id property="dataNo" column="data_no" />
+		<result property="dataCate" column="data_cate" />
+		<result property="dataArea" column="data_area" />
+		<result property="dataName" column="data_name" />
+		<result property="dataAddr" column="data_addr" />
+		<result property="dataTel" column="data_tel" />
+		<result property="dataRefer" column="data_refer" />
+		<result property="dataDesc1" column="data_desc1" />
+		<result property="dataDesc2" column="data_desc2" />
+		<result property="dataDesc3" column="data_desc3" />
+		<result property="dataImage" column="data_image" />
+		<result property="dataVideo" column="data_video" />
+		<result property="dataHit" column="data_hit" />
+	</resultMap>
+	
+	<select id="selectDataList" resultMap="dataMap">
+		select
+			*
+		from
+			data
+		order by
+			data_name asc
+	</select>
+	
+	<select id="selectDataListByHit" resultMap="dataMap">
+		select
+			*
+		from
+			data
+		order by
+			data_hit desc,
+			data_name asc
+	</select>
+	
+	<select id="selectDataListByArea" parameterType="str" resultMap="dataMap">
+		select
+			*
+		from
+			data
+		where 
+			data_area = #{dataArea}
+		order by
+			data_name asc
+	</select>
+	
+	<select id="selectDataListBySearch" parameterType="hashmap" resultMap="dataMap">
+		select
+			*
+		from
+			data
+		where
+			data_area = #{dataArea} 
+		and
+			data_cate = #{dataCate}
+		order by
+			data_name asc
+	</select>
+	
+	<sql id="search">
+		<if test="keyword != null">
+			and	(
+			  data_area like CONCAT(CONCAT('%', #{keyword}), '%') 
+			or	
+				data_name like CONCAT(CONCAT('%', #{keyword}), '%')
+			or
+				data_addr like CONCAT(CONCAT('%', #{keyword}), '%')
+			or	
+				data_tel like CONCAT(CONCAT('%', #{keyword}), '%')
+			or	
+				data_refer like CONCAT(CONCAT('%', #{keyword}), '%')
+			or	
+				data_desc1 like CONCAT(CONCAT('%', #{keyword}), '%')
+			or	
+				data_desc2 like CONCAT(CONCAT('%', #{keyword}), '%')
+			or	
+				data_desc3 like CONCAT(CONCAT('%', #{keyword}), '%')
+			)
+		</if>
+	</sql>
+	
+	<select id="selectDataListByKeyword" resultMap="dataMap">
+		select
+			*
+		from
+			data
+		where
+			1 = 1
+			<include refid="search"></include>
+		order by
+			data_name asc
+	</select>
+	
+	<select id="selectDataListByKeywordCount" resultType="int">
+		select
+			count(*)
+		from
+			data
+		where
+			1 = 1
+			<include refid="search"></include>
+	</select>
+	
+	<select id="selectDataByNo" parameterType="int" resultMap="dataMap">
+		select
+			*
+		from
+			data
+		where
+			data_no = #{dataNo}
+	</select>
+	
+	<update id="updateDataHit" parameterType="int">
+		update
+			data
+		set 
+			data_hit = data_hit + 1
+		where 
+			data_no = #{dataNo}
+	</update>
+</mapper>

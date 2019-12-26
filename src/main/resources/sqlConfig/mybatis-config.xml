@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str" />
+		<typeAlias type="java.lang.Integer" alias="int" />
+		<typeAlias type="com.innovation.study.domain.UserVO" alias="user" />
+		<typeAlias type="com.innovation.study.domain.QnaVO" alias="qna" />
+		<typeAlias type="com.innovation.study.domain.FaqVO" alias="faq" />
+		<typeAlias type="com.innovation.study.domain.DataVO" alias="data" />
+		<typeAlias type="com.innovation.study.domain.VisitorVO" alias="visitor" />
+	</typeAliases>
+</configuration>

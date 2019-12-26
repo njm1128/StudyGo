@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="empty_layout" template="/WEB-INF/tiles/layouts/empty_layout.jsp">
+		<put-attribute name="html_header" value="/WEB-INF/tiles/components/common/html_header.jsp" />
+		<put-attribute name="html_footer" value="/WEB-INF/tiles/components/common/html_footer.jsp" />
+	</definition>
+	
+	<definition name="base_layout" template="/WEB-INF/tiles/layouts/basic_layout.jsp" extends="empty_layout">
+		<put-attribute name="header" value="/WEB-INF/tiles/components/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/components/footer.jsp" />
+	</definition>
+	
+	<definition name="main_layout" template="/WEB-INF/tiles/layouts/main_layout.jsp" extends="base_layout">
+		<put-attribute name="banner" value="/WEB-INF/tiles/components/banner.jsp" />	
+		<put-attribute name="download" value="/WEB-INF/tiles/components/download.jsp" />	
+	</definition>
+	
+	<definition name="sub_layout" template="/WEB-INF/tiles/layouts/sub_layout.jsp" extends="base_layout">
+		<put-attribute name="sub_banner" value="/WEB-INF/tiles/components/sub_banner.jsp" />	
+		<put-attribute name="download" value="/WEB-INF/tiles/components/download.jsp" />	
+		<put-attribute name="submenu" value="/WEB-INF/tiles/components/submenu.jsp" />	
+		<put-attribute name="left_side" value="" />	
+		<put-attribute name="right_side" value="" />	
+	</definition>
+	
+	<definition name="sub_right_side_layout" template="/WEB-INF/tiles/layouts/sub_layout.jsp" extends="sub_layout">
+		<put-attribute name="right_side" value="/WEB-INF/tiles/components/right_side.jsp" />	
+	</definition>
+	
+	<definition name="admin_layout" template="/WEB-INF/tiles/layouts/sub_layout.jsp" extends="sub_layout">
+		<put-attribute name="left_side" value="/WEB-INF/tiles/components/admin_side.jsp" />	
+	</definition>
+	
+	<definition name="/" extends="base_layout">
+		<put-attribute name="content" value="/index.jsp" />
+	</definition>
+	
+	<definition name="main" extends="main_layout">
+		<put-attribute name="content" value="/WEB-INF/views/main.jsp" />
+	</definition>
+	
+	<definition name="common/*" extends="sub_layout">
+		<put-attribute name="content" value="/WEB-INF/views/common/{1}.jsp" />
+	</definition>
+	
+	<definition name="err/*" extends="sub_layout">
+		<put-attribute name="content" value="/WEB-INF/views/err/{1}.jsp" />
+	</definition>
+	
+	<definition name="admin/*" extends="admin_layout">
+		<put-attribute name="content" value="/WEB-INF/views/admin/{1}.jsp" />
+	</definition>
+	
+	<definition name="*/*" extends="sub_right_side_layout">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+	
+</tiles-definitions>

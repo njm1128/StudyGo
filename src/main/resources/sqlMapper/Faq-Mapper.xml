@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Faq-Mapper">
+	<resultMap type="faq" id="faqMap">
+		<id property="faqNo" column="faq_no" />
+		<result property="faqQuestion" column="faq_question" />
+		<result property="faqAnswer" column="faq_answer" />
+		<result property="reg_date" column="reg_date" />
+	</resultMap>
+	
+	<select id="selectFaqList" resultMap="faqMap">
+		select
+			*
+		from
+			faq
+		order by
+			reg_date desc 
+	</select>
+	
+	<select id="selectFaqByNo" parameterType="int" resultMap="faqMap">
+		select
+			*
+		from
+			faq
+		where
+			faq_no = #{faqNo}
+	</select>
+	
+	<insert id="insertFaq" parameterType="faq">
+		insert into faq (
+			 faq_question
+			,faq_answer
+		) values (
+			 #{faqQuestion}
+			,#{faqAnswer}
+		)
+	</insert>
+	
+	<update id="updateFaq" parameterType="faq">
+		update 
+			faq
+		set
+			 faq_question = #{faqQuestion}
+			,faq_answer = #{faqAnswer}
+		where 
+			faq_no = #{faqNo}
+	</update>
+	
+	<delete id="deleteFaq" parameterType="int">
+		delete from
+			faq
+		where 
+			faq_no = #{faqNo}
+	</delete>
+</mapper>

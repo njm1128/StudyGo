@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Visitor-Mapper">
+	<resultMap type="visitor" id="visitorMap">
+		<id property="visitorNo" column="visitor_no" />
+		<result property="visitorIp" column="visitor_ip" />
+		<result property="visitorTime" column="visitor_time" />
+	</resultMap>
+	
+	<select id="selectVisitorList" resultMap="visitorMap">
+		select
+			*
+		from
+			visitor
+		order by
+			visitor_time desc 
+	</select>
+	
+	<select id="selectVisitorListByDay" resultMap="visitorMap">
+		select
+			*
+		from
+			visitor
+		where 
+			visitor_time between date_add(now(),interval -1 day) and now()
+		order by
+			visitor_time desc 
+	</select>
+	
+	<select id="selectVisitorListByMonth" resultMap="visitorMap">
+		select
+			*
+		from
+			visitor
+		where 
+			visitor_time between date_add(now(),interval -1 month) and now()
+		order by
+			visitor_time desc 
+	</select>
+	
+  <insert id="insertVisitor" parameterType="visitor">
+      insert into visitor (
+        visitor_ip
+      ) values (
+        #{visitorIp}
+      )
+  </insert>
+	
+	
+</mapper>
